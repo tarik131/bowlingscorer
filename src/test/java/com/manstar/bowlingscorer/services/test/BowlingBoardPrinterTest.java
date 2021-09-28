@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.manstar.bowlingscorer.interfaces.BowlingBoardService;
 import com.manstar.bowlingscorer.interfaces.ScoreKeeperService;
 import com.manstar.bowlingscorer.services.BowlingBoardPrinter;
 import com.manstar.bowlingscorer.services.ScoreKeeper;
@@ -28,7 +29,7 @@ public class BowlingBoardPrinterTest {
 	ScoreKeeperService scoreKeeper;
 	
 	@Autowired
-	BowlingBoardPrinter scorePrinter;
+	BowlingBoardService scorePrinter;
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,11 +42,17 @@ public class BowlingBoardPrinterTest {
 		System.setOut(realOut);
 		scoreKeeper.getFrames().clear();
 	}
-
+	
 	@Test
-	public void SampleTest() {
-		 System.out.print("hello");
-		 assertEquals("hello", testOut.toString());
+	public void noScoreTest() {
+		scorePrinter.showScore();
+		assertEquals("Score: \r\n", testOut.toString());
+	}
+	
+	@Test
+	public void noPinFallsTest() {
+		scorePrinter.showPinFalls();
+		assertEquals("Pin falls: \r\n", testOut.toString());
 	}
 	
 	@Test
